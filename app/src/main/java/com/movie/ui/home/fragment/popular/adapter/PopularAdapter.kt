@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.movie.R
 import com.movie.common.*
+import com.movie.common.Constanst.TYPE_CONTENT
+import com.movie.common.Constanst.TYPE_RETRY
 import com.movie.databinding.ItemPopularBinding
 import com.movie.databinding.ItemRetryBinding
 import com.movie.db.FavManager
@@ -26,7 +28,7 @@ class PopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            Constanst.TYPE_CONTENT -> ContentViewHolder(
+            TYPE_CONTENT -> ContentViewHolder(
                 DataBindingUtil.inflate(
                     layoutInflater, R.layout.item_popular,
                     parent, FALSE
@@ -56,9 +58,9 @@ class PopularAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when (models[position].type) {
-            Constanst.TYPE_CONTENT -> Constanst.TYPE_CONTENT
-            Constanst.TYPE_RETRY -> Constanst.TYPE_RETRY
-            else -> Constanst.TYPE_CONTENT
+            TYPE_CONTENT -> TYPE_CONTENT
+            TYPE_RETRY -> TYPE_RETRY
+            else -> TYPE_CONTENT
         }
     }
 
