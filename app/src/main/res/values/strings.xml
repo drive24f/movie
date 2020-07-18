@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name_movie">movie</string>
+    <string name="text_splash_movie_db">Movie DB</string>
+    <string name="text_home_categories">categories</string>
+    <string name="error_message">Ooops, something went wrong</string>
+    <string name="text_title_favorite_movies">Favorite Movies</string>
+    <string name="text_movie_db">Movie db</string>
+    <string name="text_movie_detail">Movie Detail</string>
+    <string name="text_no_movie_saved">No movie saved</string>
+    <string name="text_movie_reviews">Movie Reviews</string>
+    <string name="text_overview">Overview</string>
+    <string name="text_no_review">No one has reviewed this film</string>
+    <string name="text_retry">Retry</string>
+    <string name="text_to_loadmore">to loadmore</string>
+</resources>

@@ -1,0 +1,65 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/hw4"
+            android:layout_marginLeft="@dimen/hw4"
+            android:layout_marginTop="@dimen/hw4"
+            android:layout_marginEnd="@dimen/hw4"
+            android:layout_marginRight="@dimen/hw4"
+            android:layout_marginBottom="@dimen/hw4"
+            android:background="@color/white"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="@dimen/hw6"
+            app:cardUseCompatPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            card_view:cardElevation="10">
+
+            <RelativeLayout
+                android:id="@+id/layout_retry"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hw120"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:visibility="visible"
+                card_view:ignore="UnusedAttribute">
+
+                <TextView
+                    android:id="@+id/text_retry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/text_retry"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_retry"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/text_to_loadmore"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts14" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

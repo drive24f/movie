@@ -1,0 +1,90 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="visibility"
+            type="com.movie.common.Visibility" />
+
+        <variable
+            name="colorItem"
+            type="com.movie.common.BackgroundColor" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/hw4"
+        android:layout_marginLeft="@dimen/hw4"
+        android:layout_marginTop="@dimen/hw4"
+        android:layout_marginEnd="@dimen/hw4"
+        android:layout_marginRight="@dimen/hw4"
+        android:layout_marginBottom="@dimen/hw4"
+        android:background="@color/white"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:thicknessRatio="1.9"
+        app:cardCornerRadius="@dimen/hw6"
+        app:cardUseCompatPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        card_view:cardElevation="10">
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:shimmer_color="@color/white">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@{colorItem.bgColor}"
+                android:padding="@dimen/hw10"
+                card_view:ignore="UnusedAttribute">
+
+                <TextView
+                    android:id="@+id/textAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts16"
+                    android:textStyle="bold"
+                    android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="author" />
+
+                <TextView
+                    android:id="@+id/textContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:textColor="@color/defaultTextColor"
+                    android:textSize="@dimen/ts15"
+                    android:textStyle="normal"
+                    android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textAuthor"
+                    tools:text="desc" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

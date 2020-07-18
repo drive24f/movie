@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="UselessLeaf">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnPopular"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hw50"
+            android:foreground="?selectableItemBackgroundBorderless"
+            tools:ignore="UnusedAttribute">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/hw15"
+                android:layout_marginLeft="@dimen/hw15"
+                android:text="Popular"
+                android:textColor="@color/defaultTextColor"
+                android:textSize="@dimen/ts18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnTopRated"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hw50"
+            android:foreground="?selectableItemBackgroundBorderless"
+            tools:ignore="UnusedAttribute">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/hw15"
+                android:layout_marginLeft="@dimen/hw15"
+                android:text="Top Rated"
+                android:textColor="@color/defaultTextColor"
+                android:textSize="@dimen/ts18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnNowPlaying"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hw50"
+            android:foreground="?selectableItemBackgroundBorderless"
+            tools:ignore="UnusedAttribute">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/hw15"
+                android:layout_marginLeft="@dimen/hw15"
+                android:text="Now Playing"
+                android:textColor="@color/defaultTextColor"
+                android:textSize="@dimen/ts18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+</layout>

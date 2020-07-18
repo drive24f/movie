@@ -1,0 +1,131 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="visibility"
+            type="com.movie.common.Visibility" />
+
+        <variable
+            name="colorItem"
+            type="com.movie.common.BackgroundColor" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/hw4"
+        android:layout_marginLeft="@dimen/hw4"
+        android:layout_marginTop="@dimen/hw4"
+        android:layout_marginEnd="@dimen/hw4"
+        android:layout_marginRight="@dimen/hw4"
+        android:layout_marginBottom="@dimen/hw4"
+        android:background="@color/white"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:thicknessRatio="1.9"
+        app:cardCornerRadius="@dimen/hw6"
+        app:cardUseCompatPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        card_view:cardElevation="10">
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:shimmer_color="@color/white">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@{colorItem.bgColor}"
+                android:minHeight="@dimen/hw160"
+                android:padding="@dimen/hw5"
+                card_view:ignore="UnusedAttribute">
+
+                <ImageView
+                    android:id="@+id/imageMovie"
+                    android:layout_width="@dimen/hw120"
+                    android:layout_height="@dimen/hw150"
+                    android:scaleType="fitXY"
+                    android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    card_view:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/image_bookmark"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_star"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/hw10"
+                    android:layout_marginLeft="@dimen/hw10"
+                    android:layout_marginTop="@dimen/hw5"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:minWidth="@dimen/hw150"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts20"
+                    android:textStyle="bold"
+                    android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.093"
+                    app:layout_constraintStart_toEndOf="@+id/imageMovie"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Artemis Fowl" />
+
+                <TextView
+                    android:id="@+id/textDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Jun 12, 2020"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts12"
+                    android:textStyle="bold"
+                    android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="@+id/textTitle"
+                    app:layout_constraintStart_toStartOf="@+id/textTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+                <TextView
+                    android:id="@+id/textDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/hw5"
+                    android:ellipsize="end"
+                    android:maxLines="10"
+                    android:text="desc"
+                    android:textColor="@color/defaultTextColor"
+                    android:textSize="@dimen/ts14"
+                    android:textStyle="normal"
+                    android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="@+id/textDate"
+                    app:layout_constraintStart_toStartOf="@+id/textDate"
+                    app:layout_constraintTop_toBottomOf="@+id/textDate" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

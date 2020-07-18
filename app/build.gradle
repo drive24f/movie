@@ -1,0 +1,203 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'me.moallemi.advanced-build-version'
+apply plugin: 'io.objectbox'
+apply plugin: 'com.google.gms.google-services'
+
+def appVersionMajor = 1
+def appVersionMinor = 0
+def appVersionPatch = 0
+def appVersionCode = 1
+
+def compileSdkVer = 29
+def buildToolsVer = '29.0.3'
+
+advancedVersioning {
+
+    nameOptions {
+        versionMajor appVersionMajor
+        versionMinor appVersionMinor
+        versionPatch appVersionPatch
+    }
+
+    codeOptions {
+        versionCodeType 'AUTO_INCREMENT_ONE_STEP'
+        dependsOnTasks 'debug', 'release', 'assemble'
+    }
+
+    outputOptions {
+        renameOutput true
+        nameFormat "Movie-\$buildType-\$versionName(\$versionCode)"
+    }
+}
+
+android {
+
+    compileSdkVersion compileSdkVer
+    buildToolsVersion buildToolsVer
+
+    defaultConfig {
+        applicationId prodId
+        multiDexEnabled = true
+        minSdkVersion sdkVersion
+        targetSdkVersion targetVersion
+        renderscriptTargetApi renderscript.toInteger()
+        renderscriptSupportModeEnabled false
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+                arg("room.incremental", "true")
+                arg("room.expandProjection", "true")
+            }
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("movie-dev.jks")
+            storePassword 'movie-dev'
+            keyAlias = 'movie'
+            keyPassword 'movie-dev'
+        }
+
+        release {
+            storeFile file("movie-prod.jks")
+            storePassword 'movie-prod'
+            keyAlias = 'movie'
+            keyPassword 'movie-prod'
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    flavorDimensions "release_channel"
+    productFlavors {
+        staging {
+            dimension "release_channel"
+            applicationId stagingId
+            versionCode appVersionCode
+            versionName advancedVersioning.versionName
+            buildConfigField "String", "BASE_API_URL", String.format("\"%s\"", stagingServerURL)
+            buildConfigField "String", "YOUTUBE_KEY", youtubeKey
+            buildConfigField "Integer", "TIMEOUT", timeOut
+            resValue "string", "app_name", stagingAppName
+            manifestPlaceholders = [appIcon: stagingAppIcon]
+        }
+
+        production {
+            dimension "release_channel"
+            applicationId prodId
+            versionCode appVersionCode
+            versionName advancedVersioning.versionName
+            buildConfigField "String", "BASE_API_URL", String.format("\"%s\"", prodServerURL)
+            buildConfigField "String", "YOUTUBE_KEY", youtubeKey
+            buildConfigField "Integer", "TIMEOUT", timeOut
+            resValue "string", "app_name", prodAppName
+            manifestPlaceholders = [appIcon: prodAppIcon]
+        }
+    }
+
+    buildFeatures{
+        dataBinding = true
+        viewBinding = false
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url 'https://jitpack.io' }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+        disable 'InvalidPackage'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
+}
+
+dependencies {
+    compileOnly Deps.jsr250_api
+    implementation Deps.androidx_core
+    implementation Deps.androidx_appcompat
+    implementation Deps.androidx_constraintlayout
+    implementation Deps.play_services_auth
+
+    implementation Deps.rxandroid
+    implementation Deps.rxjava
+    implementation Deps.okhttp
+    implementation Deps.logging_interceptor
+    implementation Deps.retrofit
+    implementation Deps.converter_gson
+    implementation Deps.rxjava2_adapter
+    implementation Deps.gson
+    implementation Deps.multidex
+    implementation Deps.glide
+    implementation Deps.shimmer
+    implementation Deps.dagger
+    implementation Deps.rxBindingDesign
+    implementation Deps.circularimageview
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
+    kapt Deps.glide_compiler
+    kapt Deps.dagger_compiler
+    kapt Deps.dagger_android_processor
+
+    testImplementation Deps.junit
+    configurations.all { exclude group: 'com.android.support', module: 'support-v13' }
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}
