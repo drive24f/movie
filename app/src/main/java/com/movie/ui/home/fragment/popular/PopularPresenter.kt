@@ -50,7 +50,7 @@ class PopularPresenter(val context: Context) {
         disposePopular = api.fetchPopular(APIKEY, LANGUAGE, page, REGION_ID)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { view.showLoading()}
-            .doAfterTerminate { }
+            .doAfterTerminate { view.hideLoading() }
             .delay(DELAY, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ view.onRetrieveData(it) }) { catchError(it) }

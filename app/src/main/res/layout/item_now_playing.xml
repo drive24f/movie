@@ -97,14 +97,14 @@
                     android:id="@+id/textDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Jun 12, 2020"
                     android:textColor="@color/black"
                     android:textSize="@dimen/ts12"
                     android:textStyle="bold"
                     android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="@+id/textTitle"
                     app:layout_constraintStart_toStartOf="@+id/textTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/textTitle"
+                    tools:text="Jun 12, 2020" />
 
                 <TextView
                     android:id="@+id/textDesc"
@@ -113,14 +113,14 @@
                     android:layout_marginTop="@dimen/hw5"
                     android:ellipsize="end"
                     android:maxLines="10"
-                    android:text="desc"
                     android:textColor="@color/defaultTextColor"
                     android:textSize="@dimen/ts14"
                     android:textStyle="normal"
                     android:visibility="@{visibility.visible ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="@+id/textDate"
                     app:layout_constraintStart_toStartOf="@+id/textDate"
-                    app:layout_constraintTop_toBottomOf="@+id/textDate" />
+                    app:layout_constraintTop_toBottomOf="@+id/textDate"
+                    tools:text="desc" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,15 +1,21 @@
 package com.movie.ui.home.fragment.popular
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.movie.BaseFragment
 import com.movie.MainApp
 import com.movie.common.Constanst
+import com.movie.common.Constanst.INIT_PAGE
+import com.movie.common.Constanst.MAX_PAGE
+import com.movie.common.Constanst.MIN_PAGE
+import com.movie.common.Constanst.RETRY
 import com.movie.databinding.FragmentPopularBinding
 import com.movie.model.response.PopularResponse
 import com.movie.ui.detail.DetailActivity
@@ -57,7 +63,7 @@ class PopularFragment : BaseFragment(), PopularView {
         loadData()
 
         binding.swiperefresh.setOnRefreshListener {
-            presenter.fetchMovie(page = Constanst.INIT_PAGE)
+            presenter.fetchMovie(page = INIT_PAGE)
         }
     }
 
@@ -80,18 +86,18 @@ class PopularFragment : BaseFragment(), PopularView {
         binding.let {
             when {
                 !popularAdapter.isAvailable() -> {
-                    currentPage = Constanst.MIN_PAGE
-                    presenter.fetchMovie(page = Constanst.INIT_PAGE)
+                    currentPage = MIN_PAGE
+                    presenter.fetchMovie(page = INIT_PAGE)
                 }
-                currentPage == Constanst.MIN_PAGE && popularAdapter.isAvailable() && totalPage == Constanst.ZERO -> {
-                    currentPage = Constanst.MIN_PAGE
-                    presenter.fetchMovie(page = Constanst.INIT_PAGE)
+                currentPage == MIN_PAGE && popularAdapter.isAvailable() && totalPage == Constanst.ZERO -> {
+                    currentPage = MIN_PAGE
+                    presenter.fetchMovie(page = INIT_PAGE)
                 }
                 popularAdapter.isRetry() -> {
                     it.recyclerView.removeOnScrollListener(scrollListener)
                 }
                 else -> {
-                    if (totalPage > Constanst.MIN_PAGE) {
+                    if (totalPage > MIN_PAGE) {
                         it.recyclerView.addOnScrollListener(scrollListener)
                     }
                 }
@@ -103,10 +109,12 @@ class PopularFragment : BaseFragment(), PopularView {
         popularAdapter.getItem { item, _ ->
             if (item is PopularResponse.Result) {
                 DetailActivity.create().start(getActivity, movieId = item.id.toString())
-            } else if (item == Constanst.RETRY) {
+            } else if (item == RETRY) {
                 if (currentPage != totalPage) {
                     popularAdapter.update(presenter.loadMore())
                     presenter.fetchLoadMore(page = currentPage.toString())
+                } else {
+                    presenter.fetchMovie(page = INIT_PAGE)
                 }
             }
         }
@@ -117,7 +125,7 @@ class PopularFragment : BaseFragment(), PopularView {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val totalItemCount: Int = recyclerView.layoutManager!!.itemCount
-                if (totalItemCount == linearLayoutManager.findLastVisibleItemPosition() + Constanst.MIN_PAGE) {
+                if (totalItemCount == linearLayoutManager.findLastVisibleItemPosition() + MIN_PAGE) {
                     currentPage++
                     binding.recyclerView.removeOnScrollListener(scrollListener)
                     if (currentPage != totalPage) {
@@ -144,7 +152,7 @@ class PopularFragment : BaseFragment(), PopularView {
     }
 
     override fun hideLoading() {
-        // do something here
+        binding.swiperefresh.isRefreshing = false
     }
 
     override fun onError(message: String) {
@@ -157,18 +165,20 @@ class PopularFragment : BaseFragment(), PopularView {
     }
 
     override fun onRetrieveData(model: PopularResponse) {
-        totalPage = model.totalPages
-        if (totalPage > Constanst.MIN_PAGE && model.results?.size == Constanst.MAX_PAGE) {
-            binding.recyclerView.addOnScrollListener(scrollListener)
+        binding.let {
+            totalPage = model.totalPages
+            if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
+                it.recyclerView.addOnScrollListener(scrollListener)
+            }
+            it.swiperefresh.isRefreshing = false
+            popularAdapter.set(model.results ?: mutableListOf())
         }
-        binding.swiperefresh.isRefreshing = false
-        popularAdapter.set(model.results ?: mutableListOf())
     }
 
     override fun onRetrieveMoreData(model: PopularResponse) {
         binding.let {
-            binding.recyclerView.removeOnScrollListener(scrollListener)
-            binding.recyclerView.addOnScrollListener(scrollListener)
+            it.recyclerView.removeOnScrollListener(scrollListener)
+            it.recyclerView.addOnScrollListener(scrollListener)
             popularAdapter.update(model.results ?: mutableListOf())
         }
     }

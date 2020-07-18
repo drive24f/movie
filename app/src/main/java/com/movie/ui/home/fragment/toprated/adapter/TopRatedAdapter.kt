@@ -1,8 +1,6 @@
 package com.movie.ui.home.fragment.toprated.adapter
 
-import android.app.Activity
 import android.content.Context
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -19,7 +17,6 @@ import com.movie.databinding.ItemTopRatedBinding
 import com.movie.db.FavManager
 import com.movie.model.response.TopRatedResponse
 import java.lang.Boolean.FALSE
-import kotlin.math.roundToInt
 
 class TopRatedAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -177,34 +174,10 @@ class TopRatedAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private inner class RetryViewHolder(val binding: ItemRetryBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.let {
-                it.layoutRetry.layoutParams.width = width().roundToInt()
-                it.layoutRetry.layoutParams.height = height().roundToInt()
-                it.layoutRetry.requestLayout()
-            }
-        }
-
         fun bindItem(position: Int) {
             binding.let {
                 it.layoutRetry.setOnClickListener { listener(Constanst.RETRY, position) }
             }
-        }
-
-        fun getContext(): Context {
-            return binding.root.context
-        }
-
-        fun width(): Float {
-            val metrics = DisplayMetrics()
-            (getContext() as Activity).windowManager.defaultDisplay.getMetrics(metrics)
-            return metrics.widthPixels / 3.0.toFloat()
-        }
-
-        fun height(): Float {
-            val metrics = DisplayMetrics()
-            (getContext() as Activity).windowManager.defaultDisplay.getMetrics(metrics)
-            return metrics.heightPixels / 3.7.toFloat()
         }
     }
 }
