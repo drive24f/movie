@@ -167,7 +167,6 @@ class NowPlayingFragment : BaseFragment(), NowPlayingView {
             if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
                 it.recyclerView.addOnScrollListener(scrollListener)
             }
-            it.swiperefresh.isRefreshing = false
             nowPlayingAdapter.set(model.results ?: mutableListOf())
         }
     }

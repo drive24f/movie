@@ -170,7 +170,6 @@ class PopularFragment : BaseFragment(), PopularView {
             if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
                 it.recyclerView.addOnScrollListener(scrollListener)
             }
-            it.swiperefresh.isRefreshing = false
             popularAdapter.set(model.results ?: mutableListOf())
         }
     }

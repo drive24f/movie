@@ -167,7 +167,6 @@ class TopRatedFragment : BaseFragment(), TopRatedView {
             if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
                 it.recyclerView.addOnScrollListener(scrollListener)
             }
-            it.swiperefresh.isRefreshing = false
             topRatedAdapter.set(model.results ?: mutableListOf())
         }
     }
