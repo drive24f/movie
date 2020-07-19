@@ -60,6 +60,7 @@ class NowPlayingFragment : BaseFragment(), NowPlayingView {
         loadData()
 
         binding.swiperefresh.setOnRefreshListener {
+            currentPage = MIN_PAGE
             presenter.fetchMovie(page = INIT_PAGE)
         }
     }
@@ -111,6 +112,7 @@ class NowPlayingFragment : BaseFragment(), NowPlayingView {
                     nowPlayingAdapter.update(presenter.loadMore())
                     presenter.fetchLoadMore(page = currentPage.toString())
                 } else {
+                    currentPage = MIN_PAGE
                     presenter.fetchMovie(page = INIT_PAGE)
                 }
             }
@@ -154,7 +156,7 @@ class NowPlayingFragment : BaseFragment(), NowPlayingView {
 
     override fun onError(message: String) {
         binding.recyclerView.removeOnScrollListener(scrollListener)
-        nowPlayingAdapter.update(presenter.retry())
+        nowPlayingAdapter.set(presenter.retry())
     }
 
     override fun removeListener() {
@@ -167,7 +169,7 @@ class NowPlayingFragment : BaseFragment(), NowPlayingView {
             if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
                 it.recyclerView.addOnScrollListener(scrollListener)
             }
-            nowPlayingAdapter.set(model.results ?: mutableListOf())
+            nowPlayingAdapter.set(model.results?: mutableListOf())
         }
     }
 
@@ -175,7 +177,7 @@ class NowPlayingFragment : BaseFragment(), NowPlayingView {
         binding.let {
             it.recyclerView.removeOnScrollListener(scrollListener)
             it.recyclerView.addOnScrollListener(scrollListener)
-            nowPlayingAdapter.update(model.results ?: mutableListOf())
+            nowPlayingAdapter.update(model.results?: mutableListOf())
         }
     }
 }

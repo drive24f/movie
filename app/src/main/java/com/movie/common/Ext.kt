@@ -50,5 +50,5 @@ fun String.formatDate(): String {
     } catch (e: ParseException) {
         e.printStackTrace()
     }
-    return output.format(d!!)
+    return output.format(d!!)?: ""
 }

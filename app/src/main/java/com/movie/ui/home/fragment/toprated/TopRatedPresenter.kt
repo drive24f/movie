@@ -5,7 +5,6 @@ import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.movie.MainApp
 import com.movie.R
 import com.movie.api.ApiService
-import com.movie.common.Constanst
 import com.movie.common.Constanst.APIKEY
 import com.movie.common.Constanst.DELAY
 import com.movie.common.Constanst.LANGUAGE

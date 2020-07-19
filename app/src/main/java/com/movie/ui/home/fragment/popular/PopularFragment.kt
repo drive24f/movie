@@ -1,14 +1,12 @@
 package com.movie.ui.home.fragment.popular
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.movie.BaseFragment
 import com.movie.MainApp
 import com.movie.common.Constanst
@@ -63,6 +61,7 @@ class PopularFragment : BaseFragment(), PopularView {
         loadData()
 
         binding.swiperefresh.setOnRefreshListener {
+            currentPage = MIN_PAGE
             presenter.fetchMovie(page = INIT_PAGE)
         }
     }
@@ -114,6 +113,7 @@ class PopularFragment : BaseFragment(), PopularView {
                     popularAdapter.update(presenter.loadMore())
                     presenter.fetchLoadMore(page = currentPage.toString())
                 } else {
+                    currentPage = MIN_PAGE
                     presenter.fetchMovie(page = INIT_PAGE)
                 }
             }
@@ -157,7 +157,7 @@ class PopularFragment : BaseFragment(), PopularView {
 
     override fun onError(message: String) {
         binding.recyclerView.removeOnScrollListener(scrollListener)
-        popularAdapter.update(presenter.retry())
+        popularAdapter.set(presenter.retry())
     }
 
     override fun removeListener() {
@@ -170,7 +170,7 @@ class PopularFragment : BaseFragment(), PopularView {
             if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
                 it.recyclerView.addOnScrollListener(scrollListener)
             }
-            popularAdapter.set(model.results ?: mutableListOf())
+            popularAdapter.set(model.results?: mutableListOf())
         }
     }
 
@@ -178,7 +178,7 @@ class PopularFragment : BaseFragment(), PopularView {
         binding.let {
             it.recyclerView.removeOnScrollListener(scrollListener)
             it.recyclerView.addOnScrollListener(scrollListener)
-            popularAdapter.update(model.results ?: mutableListOf())
+            popularAdapter.update(model.results?: mutableListOf())
         }
     }
 }

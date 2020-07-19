@@ -60,6 +60,7 @@ class TopRatedFragment : BaseFragment(), TopRatedView {
         loadData()
 
         binding.swiperefresh.setOnRefreshListener {
+            currentPage = MIN_PAGE
             presenter.fetchMovie(page = INIT_PAGE)
         }
     }
@@ -111,6 +112,7 @@ class TopRatedFragment : BaseFragment(), TopRatedView {
                     topRatedAdapter.update(presenter.loadMore())
                     presenter.fetchLoadMore(page = currentPage.toString())
                 } else {
+                    currentPage = MIN_PAGE
                     presenter.fetchMovie(page = INIT_PAGE)
                 }
             }
@@ -154,7 +156,7 @@ class TopRatedFragment : BaseFragment(), TopRatedView {
 
     override fun onError(message: String) {
         binding.recyclerView.removeOnScrollListener(scrollListener)
-        topRatedAdapter.update(presenter.retry())
+        topRatedAdapter.set(presenter.retry())
     }
 
     override fun removeListener() {
@@ -167,7 +169,7 @@ class TopRatedFragment : BaseFragment(), TopRatedView {
             if (totalPage > MIN_PAGE && model.results?.size == MAX_PAGE) {
                 it.recyclerView.addOnScrollListener(scrollListener)
             }
-            topRatedAdapter.set(model.results ?: mutableListOf())
+            topRatedAdapter.set(model.results?: mutableListOf())
         }
     }
 
@@ -175,7 +177,7 @@ class TopRatedFragment : BaseFragment(), TopRatedView {
         binding.let {
             it.recyclerView.removeOnScrollListener(scrollListener)
             it.recyclerView.addOnScrollListener(scrollListener)
-            topRatedAdapter.update(model.results ?: mutableListOf())
+            topRatedAdapter.update(model.results?: mutableListOf())
         }
     }
 }
